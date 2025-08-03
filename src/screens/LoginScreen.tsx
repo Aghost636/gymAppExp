@@ -10,37 +10,31 @@ import {
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
-import { createUser } from '../appwrite';
+import { signIn } from '../appwrite';
 
-const SignUpScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignUp = async () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields');
-      return;
-    }
-
-    if (password.length < 8) {
-      Alert.alert('Error', 'Password must be at least 8 characters long');
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const user = await createUser(email, password, email.split('@')[0]);
-        Alert.alert('Success', 'Account created successfully!');
-        navigation.navigate('Login')
-      console.log('User created:', user);
-      // Reset form
+      const session = await signIn(email, password);
+      Alert.alert('Success', 'Logged in successfully!');
+      console.log('Login successful:', session);
+      // TODO: Navigate to main app screen
       setEmail('');
       setPassword('');
     } catch (error) {
-      Alert.alert('Error', error.message || 'Failed to create account');
-      console.error('Sign up error:', error);
+      Alert.alert('Error', error.message || 'Failed to log in');
+      console.error('Login error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +43,8 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.title}>Create an Account</Text>
+        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.subtitle}>Log in to your account</Text>
         
         <TextInput
           placeholder="Email"
@@ -71,18 +66,25 @@ const SignUpScreen = ({ navigation }) => {
         />
         
         <Button 
-          title={isLoading ? "Creating Account..." : "Create Account"} 
-          onPress={handleSignUp}
+          title={isLoading ? "Logging in..." : "Log In"} 
+          onPress={handleLogin}
           disabled={isLoading}
         />
         
         <TouchableOpacity 
           style={styles.linkButton} 
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('SignUp')}
         >
           <Text style={styles.linkText}>
-            Already have an account? Log in
+            Don't have an account? Sign up
           </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.linkButton}
+          onPress={() => navigation.navigate('ForgotPassword')}
+        >
+          <Text style={styles.linkText}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
@@ -97,10 +99,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 24,
+    fontSize: 28,
+    marginBottom: 8,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 32,
+    textAlign: 'center',
+    color: '#666',
   },
   input: {
     borderWidth: 1,
@@ -119,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default LoginScreen;
