@@ -97,13 +97,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 24,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 28,
     marginBottom: 8,
     fontWeight: 'bold',
-    textAlign: 'center',
+      textAlign: 'center',
+    color: '#fff'
   },
   subtitle: {
     fontSize: 16,
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#00BFFF',
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,

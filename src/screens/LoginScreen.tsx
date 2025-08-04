@@ -121,7 +121,8 @@ const styles = StyleSheet.create({
     borderColor: '#00BFFF',
     borderRadius: 8,
     padding: 12,
-    marginBottom: 16,
+      marginBottom: 16,
+    color: '#fff',
   },
   linkButton: {
     marginTop: 16,
