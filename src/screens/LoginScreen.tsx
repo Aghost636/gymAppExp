@@ -8,7 +8,7 @@ import {
     TextInput,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    View,
+    View
 } from 'react-native';
 import { signIn } from '../appwrite';
 
@@ -42,8 +42,13 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Welcome Back</Text>
+          <View style={styles.container}>
+             {/* <Image 
+  source={logo} 
+  style={styles.logo}
+  resizeMode="contain"
+/>*/}
+        <Text style={styles.title}>Lets Get Started</Text>
         <Text style={styles.subtitle}>Log in to your account</Text>
         
         <TextInput
@@ -96,13 +101,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 24,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 28,
     marginBottom: 8,
     fontWeight: 'bold',
-    textAlign: 'center',
+      textAlign: 'center',
+    color: '#fff',
   },
   subtitle: {
     fontSize: 16,
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#00BFFF',
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
@@ -123,7 +129,13 @@ const styles = StyleSheet.create({
   },
   linkText: {
     color: '#007AFF',
-    fontSize: 16,
+      fontSize: 16,
+    logo: {
+  width: 100,
+  height: 60,
+  marginBottom: 20,
+  alignSelf: 'center',
+},
   },
 });
 
