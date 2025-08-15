@@ -28,9 +28,8 @@ const LoginScreen = ({ navigation }) => {
     try {
       const session = await signIn(email, password);
       Alert.alert('Success', 'Logged in successfully!');
-navigation.navigate('MainApp'); // Add this line
+      navigation.navigate('MainApp');
       console.log('Login successful:', session);
-      // TODO: Navigate to main app screen
       setEmail('');
       setPassword('');
     } catch (error) {
@@ -101,8 +100,6 @@ navigation.navigate('MainApp'); // Add this line
   );
 };
 
-// Add this button temporarily
-<Button title="Logout (for testing)" onPress={signOut} />
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -138,12 +135,6 @@ const styles = StyleSheet.create({
   linkText: {
     color: '#007AFF',
       fontSize: 16,
-    logo: {
-  width: 100,
-  height: 60,
-  marginBottom: 20,
-  alignSelf: 'center',
-},
   },
 });
 

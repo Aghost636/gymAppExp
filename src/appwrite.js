@@ -1,4 +1,4 @@
-import { Account, Client } from 'appwrite';
+import { Account, Client, ID } from 'appwrite';
 import 'react-native-url-polyfill/auto';
 
 const client = new Client()
@@ -11,11 +11,11 @@ export const account = new Account(client);
 export const createUser = async (email, password, name) => {
     try {
        const newUser = await account.create(
-    'unique()',  // Add this as first parameter
-    email,
-    password,
-    name
-);
+        ID.unique(),
+        email,
+        password,
+        name
+      );
         console.log('User created successfully:', newUser);
         return newUser;
     } catch (error) {
