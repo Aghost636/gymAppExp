@@ -1,30 +1,32 @@
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import { Text, View } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 
 // Placeholder screens - we'll build these later
 const LeaderboardScreen = () => (
-  <div style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
-    <h2 style={{color: '#fff'}}>Leaderboard Coming Soon!</h2>
-  </div>
+  <View style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
+    <Text style={{color: '#fff'}}>Leaderboard Coming Soon!</Text>
+  </View>
 );
 
 const ScheduleScreen = () => (
-  <div style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
-    <h2 style={{color: '#fff'}}>Schedule Coming Soon!</h2>
-  </div>
+  <View style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
+    <Text style={{color: '#fff'}}>Schedule Coming Soon!</Text>
+  </View>
 );
 
 const SocialScreen = () => (
-  <div style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
-    <h2 style={{color: '#fff'}}>Social Feed Coming Soon!</h2>
-  </div>
+  <View style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
+    <Text style={{color: '#fff'}}>Social Feed Coming Soon!</Text>
+  </View>
 );
 
 const ProfileScreen = () => (
-  <div style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
-    <h2 style={{color: '#fff'}}>Profile Coming Soon!</h2>
-  </div>
+  <View style={{flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center'}}>
+    <Text style={{color: '#fff'}}>Profile Coming Soon!</Text>
+  </View>
 );
 
 const Tab = createBottomTabNavigator();
@@ -32,7 +34,7 @@ const Tab = createBottomTabNavigator();
 const MainTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         tabBarStyle: {
           backgroundColor: '#1a1a1a',
           borderTopColor: '#00BFFF',
@@ -47,43 +49,39 @@ const MainTabNavigator = () => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-      }}
+        tabBarIcon: ({ color, size, focused }) => {
+          let iconName: keyof typeof Ionicons.glyphMap = 'home';
+          if (route.name === 'Home') iconName = focused ? 'home' : 'home-outline';
+          if (route.name === 'Leaderboard') iconName = focused ? 'podium' : 'podium-outline';
+          if (route.name === 'Schedule') iconName = focused ? 'calendar' : 'calendar-outline';
+          if (route.name === 'Social') iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+          if (route.name === 'Profile') iconName = focused ? 'person' : 'person-outline';
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
     >
       <Tab.Screen 
         name="Home" 
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color }) => <span style={{color}}>🏠</span>,
           title: 'Fitness For Life'
         }}
       />
       <Tab.Screen 
         name="Leaderboard" 
         component={LeaderboardScreen}
-        options={{
-          tabBarIcon: ({ color }) => <span style={{color}}>📊</span>,
-        }}
       />
       <Tab.Screen 
         name="Schedule" 
         component={ScheduleScreen}
-        options={{
-          tabBarIcon: ({ color }) => <span style={{color}}>📅</span>,
-        }}
       />
       <Tab.Screen 
         name="Social" 
         component={SocialScreen}
-        options={{
-          tabBarIcon: ({ color }) => <span style={{color}}>📱</span>,
-        }}
       />
       <Tab.Screen 
         name="Profile" 
         component={ProfileScreen}
-        options={{
-          tabBarIcon: ({ color }) => <span style={{color}}>👤</span>,
-        }}
       />
     </Tab.Navigator>
   );
