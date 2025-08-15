@@ -35,7 +35,14 @@ export const signIn = async (email, password) => {
         throw error;
     }
 };
-
+export const signOut = async () => {
+    try {
+        await account.deleteSession('current');
+        console.log('Logged out successfully');
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+};
 // Check current user
 export const getCurrentUser = async () => {
     try {

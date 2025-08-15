@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import MainTabNavigator from './src/navigation/MainTabNavigator';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -36,6 +37,11 @@ export default function App() {
           name="ForgotPassword" 
           component={ForgotPasswordScreen}
           options={{ title: 'Reset Password' }}
+        />
+        <Stack.Screen 
+          name="MainApp" 
+          component={MainTabNavigator}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import {
-    Alert,
-    Button,
-    Keyboard,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View
+  Alert,
+  Button,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
 } from 'react-native';
-import { signIn } from '../appwrite';
+import { signIn, signOut } from '../appwrite';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -28,6 +28,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       const session = await signIn(email, password);
       Alert.alert('Success', 'Logged in successfully!');
+navigation.navigate('MainApp'); // Add this line
       console.log('Login successful:', session);
       // TODO: Navigate to main app screen
       setEmail('');
@@ -84,7 +85,11 @@ const LoginScreen = ({ navigation }) => {
             Don't have an account? Sign up
           </Text>
         </TouchableOpacity>
-        
+        <Button 
+  title="Logout (Clear Session)" 
+  onPress={signOut}
+  color="red"
+/>
         <TouchableOpacity 
           style={styles.linkButton}
           onPress={() => navigation.navigate('ForgotPassword')}
@@ -96,6 +101,8 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
+// Add this button temporarily
+<Button title="Logout (for testing)" onPress={signOut} />
 const styles = StyleSheet.create({
   container: {
     flex: 1,
