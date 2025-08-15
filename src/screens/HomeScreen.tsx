@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert,
     StyleSheet,
@@ -6,11 +6,25 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { getCurrentUser } from '../appwrite';
 
 const HomeScreen = ({ navigation }) => {
   const [currentStreak, setCurrentStreak] = useState(7); // Example streak
   const [restDayShields, setRestDayShields] = useState(2); // Example shields
-  const [username] = useState('IronWarrior23'); // Example username
+  const [username, setUsername] = useState('IronWarrior23'); // Fallback username
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        // Appwrite Account type has 'name'
+        if (user.name && typeof user.name === 'string' && user.name.trim().length > 0) {
+          setUsername(user.name);
+        }
+      }
+    };
+    loadUser();
+  }, []);
 
   const handleCheckIn = () => {
     // TODO: Connect to barcode scanner

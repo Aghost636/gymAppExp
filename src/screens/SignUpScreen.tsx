@@ -15,11 +15,19 @@ import { createUser } from '../appwrite';
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignUp = async () => {
-    if (!email || !password) {
+    if (!email || !password || !username) {
       Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    // Basic username validation: 3-15 chars, letters, numbers, underscore
+    const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
+    if (!usernameRegex.test(username)) {
+      Alert.alert('Error', 'Username must be 3-15 characters and use letters, numbers, or underscores.');
       return;
     }
 
@@ -31,13 +39,14 @@ const SignUpScreen = ({ navigation }) => {
     setIsLoading(true);
 
     try {
-      const user = await createUser(email, password, email.split('@')[0]);
+      const user = await createUser(email, password, username);
         Alert.alert('Success', 'Account created successfully!');
         navigation.navigate('Login')
       console.log('User created:', user);
       // Reset form
       setEmail('');
       setPassword('');
+      setUsername('');
     } catch (error) {
       Alert.alert('Error', error.message || 'Failed to create account');
       console.error('Sign up error:', error);
@@ -50,6 +59,15 @@ const SignUpScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.title}>Create an Account</Text>
+        
+        <TextInput
+          placeholder="Username"
+          placeholderTextColor="#888"
+          style={styles.input}
+          autoCapitalize="none"
+          value={username}
+          onChangeText={setUsername}
+        />
         
         <TextInput
           placeholder="Email"
